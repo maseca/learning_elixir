@@ -35,4 +35,15 @@ defmodule Chapter10 do
   def take([ head, tail ], n) when n > 0 do
     [ head | take(tail, n - 1) ]
   end
+
+  def span(a, b) when a > b, do: []
+  def span(a, b), do: [ a | span(a + 1, b) ]
+
+  def list_primes(n) do
+    for x <- span(2, n), x not in _list_non_primes(n), do: x
+  end
+
+  defp _list_non_primes(n) do
+    for x <- span(2, n), y <- span(2, n), x > y, rem(x, y) == 0, do: x
+  end
 end
